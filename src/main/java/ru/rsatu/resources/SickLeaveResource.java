@@ -65,8 +65,8 @@ public class SickLeaveResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/createSickLeave")
-    public Response SickLeaves(SickLeaves sl){
+    @Path("/insertSickLeave")
+    public Response insertSickLeaves(SickLeaves sl){
         return Response.ok(sls.insertSickLeave(sl)).build();
     }
     //@RolesAllowed({"editTimesheets"})

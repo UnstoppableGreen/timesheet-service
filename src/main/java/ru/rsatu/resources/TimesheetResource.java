@@ -57,7 +57,7 @@ public class TimesheetResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/createTimesheet")
+    @Path("/insertTimesheet")
     public Response insertTimesheet(Timesheets t){
         return Response.ok(ts.insertTimesheet(t)).build();
     }
