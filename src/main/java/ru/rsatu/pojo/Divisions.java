@@ -13,7 +13,7 @@ import java.util.List;
 @Entity
 public class Divisions extends PanacheEntity {
     private String name;
-    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     public List<Workers> workers;

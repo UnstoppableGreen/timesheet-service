@@ -1,5 +1,6 @@
 package ru.rsatu.resources;
 
+import io.quarkus.security.Authenticated;
 import io.vertx.core.json.JsonObject;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -11,7 +12,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
+@Authenticated
 @Path("/divisions")
 public class DivisionResource {
 
