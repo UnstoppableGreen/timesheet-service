@@ -41,6 +41,7 @@ public class Timesheets extends PanacheEntity {
     public Long getId() {
         return id;
     }
+    public double duration;
 
     @Override
     public String toString() {

@@ -21,7 +21,7 @@ public class TimesheetResource {
    // @RolesAllowed({"watchAll"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/getTimesheets")
+    @Path("/getTimesheetsByPage")
     public Response getTimesheets(@QueryParam("page") int page){
         JsonObject json = new JsonObject();
         json.put("page", page);
