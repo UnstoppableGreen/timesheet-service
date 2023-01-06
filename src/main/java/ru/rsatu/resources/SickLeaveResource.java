@@ -22,8 +22,8 @@ public class SickLeaveResource {
    // @RolesAllowed({"watchAll"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/getSickLeaves")
-    public Response getSickLeaves(@QueryParam("page") int page){
+    @Path("/getSickLeavesByPage")
+    public Response getSickLeavesByPage(@QueryParam("page") int page){
         JsonObject json = new JsonObject();
         json.put("page", page);
         json.put("per_page", 10);
@@ -70,7 +70,7 @@ public class SickLeaveResource {
         return Response.ok(sls.insertSickLeave(sl)).build();
     }
     //@RolesAllowed({"editTimesheets"})
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/updateSickLeave")
