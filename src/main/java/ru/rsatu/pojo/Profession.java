@@ -22,7 +22,7 @@ public class Profession extends PanacheEntity {
     public void setName(String name) {
         this.name = name;
     }
-    @OneToMany(mappedBy = "profession", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "profession", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     public List<Workers> workers;

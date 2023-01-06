@@ -15,7 +15,7 @@ public class MedicalOrganization extends PanacheEntity {
     private String name;
     private String contacts;
     private String address;
-    @OneToMany(mappedBy = "medicalOrganization", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "medicalOrganization", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     public List<SickLeaves> sickLeave;

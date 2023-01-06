@@ -29,15 +29,15 @@ public class Workers extends PanacheEntity {
     private Date date;
 
 
-    @OneToMany(targetEntity=ru.rsatu.pojo.SickLeaves.class, mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity=ru.rsatu.pojo.SickLeaves.class, mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = false)
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     public List<SickLeaves> sickLeave;
-    @OneToMany(targetEntity=ru.rsatu.pojo.Vacations.class,mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity=ru.rsatu.pojo.Vacations.class,mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = false)
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     public List<Vacations> vacations;
-    @OneToMany(targetEntity=ru.rsatu.pojo.BusinessTrip.class,mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(targetEntity=ru.rsatu.pojo.BusinessTrip.class,mappedBy = "worker", cascade = CascadeType.ALL, orphanRemoval = false)
     //@OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     public List<BusinessTrip> businessTrip;

@@ -94,7 +94,7 @@ public class ReferenceResource {
     //@RolesAllowed({"watchAll"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/getMedicalOrganizationPage")
+    @Path("/getMedicalOrganizationsPage")
     @Timed(name = "getMedicalOrganizationPerPage", description = "getMedicalOrganizationPage() called", unit = MetricUnits.MILLISECONDS)
     public Response getMedicalOrganizationPage(@QueryParam("page") int page){
         JsonObject json = new JsonObject();

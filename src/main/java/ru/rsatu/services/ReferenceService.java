@@ -43,7 +43,7 @@ public class ReferenceService {
     }
 
     public int getCountProfessions() {
-        Number number = (Number) em.createQuery(" select count(name) from Professions ").getResultList().get(0);
+        Number number = (Number) em.createQuery(" select count(name) from Profession ").getResultList().get(0);
         return number.intValue();
     }
 
@@ -54,7 +54,7 @@ public class ReferenceService {
     }
 
     public List<Profession> getProfessionsPage(int page) {
-        Query query = em.createQuery(" select p from Professions p ");
+        Query query = em.createQuery(" select p from Profession p ");
         query.setFirstResult((page-1)*4);
         query.setMaxResults(4);
 

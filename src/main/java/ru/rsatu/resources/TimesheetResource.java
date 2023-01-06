@@ -35,7 +35,7 @@ public class TimesheetResource {
     //@RolesAllowed({"watchAll"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/getAllTimesheets")
+    @Path("/getTimesheets")
     public Response Timesheets(){
         return Response.ok(ts.getAllTimesheets()).build();
     }
@@ -59,6 +59,7 @@ public class TimesheetResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/insertTimesheet")
     public Response insertTimesheet(Timesheets t){
+        System.out.println(t.toString());
         return Response.ok(ts.insertTimesheet(t)).build();
     }
     //@RolesAllowed({"editTimesheets"})
