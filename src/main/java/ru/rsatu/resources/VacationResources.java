@@ -1,23 +1,26 @@
 package ru.rsatu.resources;
 
+import io.quarkus.security.Authenticated;
 import io.vertx.core.json.JsonObject;
 //import org.eclipse.microprofile.metrics.MetricUnits;
 //import org.eclipse.microprofile.metrics.annotation.Timed;
 import ru.rsatu.pojo.Vacations;
 import ru.rsatu.services.VacationService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Authenticated
 @Path("/vacations")
 public class VacationResources {
 
     @Inject
     VacationService vs;
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchVacation"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getVacationsPage")
@@ -33,7 +36,7 @@ public class VacationResources {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchVacation"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getVacations")
@@ -41,7 +44,7 @@ public class VacationResources {
         return Response.ok(vs.getVacations()).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchVacation"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getVacationById")
@@ -49,7 +52,7 @@ public class VacationResources {
         return Response.ok(vs.getVacationById(ID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeVacation"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,7 +61,7 @@ public class VacationResources {
         return Response.ok(vs.insertVacation(v)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeVacation"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -68,7 +71,7 @@ public class VacationResources {
         return Response.ok(vs.updateVacation(v)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeVacation"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteVacation")

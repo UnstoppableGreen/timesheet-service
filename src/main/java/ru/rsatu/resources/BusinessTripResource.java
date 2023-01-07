@@ -1,5 +1,6 @@
 package ru.rsatu.resources;
 
+import io.quarkus.security.Authenticated;
 import io.vertx.core.json.JsonObject;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -12,12 +13,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Authenticated
 @Path("/businesstrips")
 public class BusinessTripResource {
     @Inject
     BusinessTripService bts;
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchBusinessTrip"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getBusinessTripPage")
@@ -33,7 +35,7 @@ public class BusinessTripResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchBusinessTrip"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getBusinessTrip")
@@ -41,7 +43,7 @@ public class BusinessTripResource {
         return Response.ok(bts.getBusinessTrips()).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchBusinessTrip"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getBusinessTripById")
@@ -49,7 +51,7 @@ public class BusinessTripResource {
         return Response.ok(bts.getBusinessTripById(ID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeBisinessTrip"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -58,7 +60,7 @@ public class BusinessTripResource {
         return Response.ok(bts.insertBusinessTrip(d)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeBisinessTrip"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -68,7 +70,7 @@ public class BusinessTripResource {
         return Response.ok(bts.updateBusinessTrip(d)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeBisinessTrip"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteBusinessTrip")

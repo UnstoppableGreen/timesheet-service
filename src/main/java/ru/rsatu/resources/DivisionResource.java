@@ -19,7 +19,7 @@ public class DivisionResource {
     @Inject
     DivisionService ds;
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchDivision"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getDivisionsPage")
@@ -35,7 +35,7 @@ public class DivisionResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchDivision"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getDivisions")
@@ -43,7 +43,7 @@ public class DivisionResource {
         return Response.ok(ds.getDivisions()).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchDivision"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getDivisionById")
@@ -51,7 +51,7 @@ public class DivisionResource {
         return Response.ok(ds.getDivisionById(divisionID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeDivision"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -60,7 +60,7 @@ public class DivisionResource {
         return Response.ok(ds.insertDivision(d)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeDivision"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,7 +70,7 @@ public class DivisionResource {
         return Response.ok(ds.updateDivision(d)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeDivision"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteDivision")

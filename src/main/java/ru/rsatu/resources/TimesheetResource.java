@@ -12,13 +12,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-//@Authenticated
+@Authenticated
 @Path("/timesheets")
 public class TimesheetResource {
     @Inject
     TimesheetService ts;
     
-   // @RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchTimesheet"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTimesheetsByPage")
@@ -32,28 +32,28 @@ public class TimesheetResource {
         json.put("data", ts.getTimesheets(page));
         return Response.ok(json).build();
     }
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchTimesheet"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTimesheets")
     public Response Timesheets(){
         return Response.ok(ts.getAllTimesheets()).build();
     }
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchTimesheet"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTimesheetById")
     public Response getTimesheetById(@QueryParam("timesheetID") Long id){
         return Response.ok(ts.getTimesheetById(id)).build();
     }
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchTimesheet"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTimesheetByWorkerId")
     public Response getTimesheetsByWorkerId(@QueryParam("workerID") Long id){
         return Response.ok(ts.getTimesheetsByWorkerId(id)).build();
     }
-    //@RolesAllowed({"editSuppliers"})
+    @RolesAllowed({"changeTimesheet"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -62,7 +62,7 @@ public class TimesheetResource {
         System.out.println(t.toString());
         return Response.ok(ts.insertTimesheet(t)).build();
     }
-    //@RolesAllowed({"editTimesheets"})
+    @RolesAllowed({"changeTimesheet"})
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -70,7 +70,7 @@ public class TimesheetResource {
     public Response updateTimesheet(Timesheets t){
         return Response.ok(ts.updateTimesheet(t)).build();
     }
-    //@RolesAllowed({"editSuppliers"})
+    @RolesAllowed({"changeTimesheet"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteTimesheet")

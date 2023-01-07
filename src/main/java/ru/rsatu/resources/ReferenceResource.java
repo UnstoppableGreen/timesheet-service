@@ -1,5 +1,6 @@
 package ru.rsatu.resources;
 
+import io.quarkus.security.Authenticated;
 import io.vertx.core.json.JsonObject;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -18,6 +19,7 @@ import javax.ws.rs.core.Response;
 //professio
 //typeofdisability
 
+@Authenticated
 @Path("/references")
 public class ReferenceResource {
     @Inject
@@ -27,11 +29,11 @@ public class ReferenceResource {
     //Professions
     //------------------------------------------------------------------------------------------------------------------
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getProfessionsPage")
-    @Timed(name = "getProfessionsPerPage", description = "getProfessionsPage() called", unit = MetricUnits.MILLISECONDS)
+    @Timed(name = "getProfessionsPage", description = "getProfessionsPage() called", unit = MetricUnits.MILLISECONDS)
     public Response getProfessionsPage(@QueryParam("page") int page){
         JsonObject json = new JsonObject();
         json.put("page", page);
@@ -43,7 +45,7 @@ public class ReferenceResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getProfessions")
@@ -52,7 +54,7 @@ public class ReferenceResource {
     }
 
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getProfessionById")
@@ -60,7 +62,7 @@ public class ReferenceResource {
         return Response.ok(rs.getProfessionById(professionID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,7 +71,7 @@ public class ReferenceResource {
         return Response.ok(rs.insertProfession(p)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -79,7 +81,7 @@ public class ReferenceResource {
         return Response.ok(rs.updateProfession(p)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteProfession")
@@ -91,7 +93,7 @@ public class ReferenceResource {
     //------------------------------------------------------------------------------------------------------------------
     //MedicalOrganization
     //------------------------------------------------------------------------------------------------------------------
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getMedicalOrganizationsPage")
@@ -107,7 +109,7 @@ public class ReferenceResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getMedicalOrganizations")
@@ -116,7 +118,7 @@ public class ReferenceResource {
     }
 
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getMedicalOrganizationById")
@@ -124,7 +126,7 @@ public class ReferenceResource {
         return Response.ok(rs.getMedicalOrganizationById(medOrgID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -133,7 +135,7 @@ public class ReferenceResource {
         return Response.ok(rs.insertMedicalOrganization(m)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -143,7 +145,7 @@ public class ReferenceResource {
         return Response.ok(rs.updateMedicalOrganization(m)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteMedicalOrganization")
@@ -154,7 +156,7 @@ public class ReferenceResource {
     //------------------------------------------------------------------------------------------------------------------
     //MarksTimesheet
     //------------------------------------------------------------------------------------------------------------------
-//@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getMarksTimesheetPage")
@@ -170,7 +172,7 @@ public class ReferenceResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getMarksTimesheet")
@@ -179,7 +181,7 @@ public class ReferenceResource {
     }
 
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getMarksTimesheetById")
@@ -187,7 +189,7 @@ public class ReferenceResource {
         return Response.ok(rs.getMarksTimesheetById(marksTimesheetID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -196,7 +198,7 @@ public class ReferenceResource {
         return Response.ok(rs.insertMarksTimesheet(p)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -206,7 +208,7 @@ public class ReferenceResource {
         return Response.ok(rs.updateMarksTimesheet(p)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeRevfences"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteMarksTimesheet")
@@ -217,7 +219,7 @@ public class ReferenceResource {
     //------------------------------------------------------------------------------------------------------------------
     //OperatingMode
     //------------------------------------------------------------------------------------------------------------------
-//@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getOperatingModePage")
@@ -233,7 +235,7 @@ public class ReferenceResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getOperatingMode")
@@ -242,7 +244,7 @@ public class ReferenceResource {
     }
 
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getOperatingModeById")
@@ -250,7 +252,7 @@ public class ReferenceResource {
         return Response.ok(rs.getOperatingModeById(ID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -259,7 +261,7 @@ public class ReferenceResource {
         return Response.ok(rs.insertOperatingMode(p)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -269,7 +271,7 @@ public class ReferenceResource {
         return Response.ok(rs.updateOperatingMode(o)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteOperatingMode")
@@ -280,7 +282,7 @@ public class ReferenceResource {
     //------------------------------------------------------------------------------------------------------------------
     //TypeOfDisability
     //------------------------------------------------------------------------------------------------------------------
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTypeOfDisabilityPage")
@@ -296,7 +298,7 @@ public class ReferenceResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTypeOfDisability")
@@ -305,7 +307,7 @@ public class ReferenceResource {
     }
 
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchReferences"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTypeOfDisabilityById")
@@ -313,7 +315,7 @@ public class ReferenceResource {
         return Response.ok(rs.getTypeOfDisabilityById(typeOfDisabilityID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -322,7 +324,7 @@ public class ReferenceResource {
         return Response.ok(rs.insertTypeOfDisability(t)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -332,7 +334,7 @@ public class ReferenceResource {
         return Response.ok(rs.updateTypeOfDisability(t)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeReferences"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteTypeOfDisability")

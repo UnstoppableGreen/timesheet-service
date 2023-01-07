@@ -13,13 +13,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-//@Authenticated
+@Authenticated
 @Path("/sickleaves")
 public class SickLeaveResource {
     @Inject
     SickLeaveService sls;
     
-   // @RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchSickLeave"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getSickLeavesByPage")
@@ -33,35 +33,35 @@ public class SickLeaveResource {
         json.put("data", sls.getSickLeaves(page));
         return Response.ok(json).build();
     }
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchSickLeave"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getAllSickLeaves")
     public Response SickLeaves(){
         return Response.ok(sls.getAllSickLeaves()).build();
     }
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchSickLeave"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getSickLeaveById")
     public Response getSickLeaveById(@QueryParam("sickLeaveID") Long id){
         return Response.ok(sls.getSickLeaveById(id)).build();
     }
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchSickLeave"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getSickLeavesByWorkerId")
     public Response getSickLeavesByWorkerId(@QueryParam("workerID") Long id){
         return Response.ok(sls.getSickLeavesByWorkerId(id)).build();
     }
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchSickLeave"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getSickLeavesByMedicalOrganizationId")
     public Response getSickLeavesByMedicalOrganizationId(@QueryParam("medorgID") Long id){
         return Response.ok(sls.getSickLeavesByMedicalOrganizationId(id)).build();
     }
-    //@RolesAllowed({"editSuppliers"})
+    @RolesAllowed({"changeSickLeave"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -69,7 +69,7 @@ public class SickLeaveResource {
     public Response insertSickLeaves(SickLeaves sl){
         return Response.ok(sls.insertSickLeave(sl)).build();
     }
-    //@RolesAllowed({"editTimesheets"})
+    @RolesAllowed({"changeSickLeave"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -77,10 +77,10 @@ public class SickLeaveResource {
     public Response updateSupplier(SickLeaves sl){
         return Response.ok(sls.updateSickLeave(sl)).build();
     }
-    //@RolesAllowed({"editSuppliers"})
+    @RolesAllowed({"changeSickLeave"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/deleteSupplier")
+    @Path("/deleteSickLeave")
     public Response deleteSickLeave(@QueryParam("sickLeaveID") Long id){
         sls.deleteSickLeave(sls.getSickLeaveById(id));
         return Response.ok().build();

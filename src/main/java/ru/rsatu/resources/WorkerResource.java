@@ -1,5 +1,6 @@
 package ru.rsatu.resources;
 
+import io.quarkus.security.Authenticated;
 import io.vertx.core.json.JsonObject;
 //import org.eclipse.microprofile.metrics.MetricUnits;
 //import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -12,12 +13,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+@Authenticated
 @Path("/workers")
 public class WorkerResource {
     @Inject
     WorkerService ws;
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchWorker"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getWorkersPage")
@@ -33,7 +35,7 @@ public class WorkerResource {
         return Response.ok(json).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchWorker"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getWorkers")
@@ -41,6 +43,7 @@ public class WorkerResource {
         return Response.ok(ws.getWorkers()).build();
     }
 
+    @RolesAllowed({"watchWorker"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getWorkersByDivision")
@@ -48,7 +51,7 @@ public class WorkerResource {
         return Response.ok(ws.getWorkersByDivision(divisionID)).build();
     }
 
-    //@RolesAllowed({"watchAll"})
+    @RolesAllowed({"watchWorker"})
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getWorkerById")
@@ -56,7 +59,7 @@ public class WorkerResource {
         return Response.ok(ws.getWorkerById(workerID)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeWorker"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -65,7 +68,7 @@ public class WorkerResource {
         return Response.ok(ws.insertWorker(w)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeWorker"})
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,7 +78,7 @@ public class WorkerResource {
         return Response.ok(ws.updateWorker(w)).build();
     }
 
-    //@RolesAllowed({"editClients"})
+    @RolesAllowed({"changeWorker"})
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/deleteWorker")
