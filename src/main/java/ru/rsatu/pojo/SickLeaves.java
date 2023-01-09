@@ -41,7 +41,12 @@ public class SickLeaves extends PanacheEntity {
     public void setNumber(String number) {
         this.number = number;
     }
-
+    public Date getBeginDate() {
+        return beginDate;
+    }
+    public Date getEndDate() {
+        return endDate;
+    }
 
     @Override
     public String toString() {

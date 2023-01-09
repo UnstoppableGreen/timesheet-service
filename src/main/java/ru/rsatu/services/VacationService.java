@@ -48,6 +48,11 @@ public class VacationService {
         return listVacations;
     }
 
+    public List<Vacations> getVacationsByWorkerId(Long id) {
+        Query query = em.createQuery(" select v from Vacations v where worker_id="+id.toString());
+        List<Vacations> listVacations = query.getResultList();
+        return listVacations;
+    }
     public List<Vacations> getVacationsPage(int page) {
         Query query = em.createQuery(" select v from Vacations v ");
         query.setFirstResult((page-1)*4);

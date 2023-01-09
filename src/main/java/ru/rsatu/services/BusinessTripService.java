@@ -45,8 +45,14 @@ public class BusinessTripService {
 
     public List<BusinessTrip> getBusinessTrips() {
         Query query = em.createQuery(" select b from BusinessTrip b ");
-        List<BusinessTrip> listBusinessTrip = query.getResultList();
-        return listBusinessTrip;
+        List<BusinessTrip> listBusinessTrips = query.getResultList();
+        return listBusinessTrips;
+    }
+
+    public List<BusinessTrip> getBusinessTripsByWorkerId(Long id) {
+        Query query = em.createQuery(" select b from BusinessTrip b  where worker_id="+id.toString());
+        List<BusinessTrip> listBusinessTrips = query.getResultList();
+        return listBusinessTrips;
     }
 
     public List<BusinessTrip> getBusinessTripsPage(int page) {

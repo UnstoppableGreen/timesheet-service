@@ -70,10 +70,13 @@ public class SickLeaveService {
     }
     
     public List<SickLeaves> getSickLeavesByWorkerId(Long id) {
+        System.out.println("getSickLeavesByWorkerId " + id);
         Query query = em.createQuery(" select s from SickLeaves s where worker_id="+id.toString());
         List<SickLeaves> listSickLeaves = query.getResultList();
         return listSickLeaves;
     }
+
+
     public List<SickLeaves> getSickLeavesByMedicalOrganizationId(Long id) {
         Query query = em.createQuery(" select s from SickLeaves s where medicalorganization_id="+id.toString());
         List<SickLeaves> listSickLeaves = query.getResultList();

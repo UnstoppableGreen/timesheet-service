@@ -65,7 +65,12 @@ public class BusinessTrip extends PanacheEntity {
 		this.tripPurpose = tripPurpose;
 	}
 
-
+    public Date getBeginDate() {
+        return beginDate;
+    }
+    public Date getEndDate() {
+        return endDate;
+    }
 	@Override
     public String toString() {
         return "BusinessTrip{" +

@@ -35,7 +35,12 @@ public class Vacations extends PanacheEntity {
     public void setNumberCommand(String numberCommand) {
         this.numberCommand = numberCommand;
     }
-
+    public Date getBeginDate() {
+        return beginDate;
+    }
+    public Date getEndDate() {
+        return endDate;
+    }
 
     @Override
     public String toString() {

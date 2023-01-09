@@ -1,8 +1,14 @@
 package ru.rsatu.services;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.*;
 import java.util.Date;
@@ -14,10 +20,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.time.DateUtils;
+import org.jose4j.json.internal.json_simple.JSONArray;
 import org.jose4j.json.internal.json_simple.JSONObject;
-import ru.rsatu.pojo.MarksTimesheet;
-import ru.rsatu.pojo.Workers;
-import ru.rsatu.pojo.Timesheets;
+import ru.rsatu.pojo.*;
 
 @ApplicationScoped
 public class TimesheetService {
@@ -78,11 +84,14 @@ public class TimesheetService {
     public List<Timesheets> getAllTimesheets() {
         return em.createQuery(" select c from Timesheets c ", Timesheets.class).getResultList();
     }
-    
     public List<Timesheets> getTimesheetsByWorkerId(Long id) {
-        Query query = em.createQuery(" select s from Timesheets s where worker_id="+id.toString());
+        Query query = em.createQuery(" select s from Timesheets s where workers_id="+id.toString());
         List<Timesheets> listTimesheets = query.getResultList();
         return listTimesheets;
+    }
+    public int countTimesheetsByWorkerId(Long id) {
+        Number timesheetsQTY = (Number) em.createQuery(" select count(id) from Timesheets where workers_id="+id.toString()).getResultList().get(0);
+        return timesheetsQTY.intValue() ;
     }
     
     public int countTimesheets() {
