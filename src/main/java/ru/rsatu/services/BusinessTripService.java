@@ -49,8 +49,11 @@ public class BusinessTripService {
         return listBusinessTrips;
     }
 
-    public List<BusinessTrip> getBusinessTripsByWorkerId(Long id) {
+    public List<BusinessTrip> getBusinessTripsByWorkerId(Long id, String beginDate, String endDate) {
         Query query = em.createQuery(" select b from BusinessTrip b  where worker_id="+id.toString());
+        /*+
+                " AND (beginDate BETWEEN '" + beginDate + "' AND '" + endDate +"'"+
+                " OR  endDate BETWEEN '" + beginDate + "' AND '" + endDate +"')");*/
         List<BusinessTrip> listBusinessTrips = query.getResultList();
         return listBusinessTrips;
     }

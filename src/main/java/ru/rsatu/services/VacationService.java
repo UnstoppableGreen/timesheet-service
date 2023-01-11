@@ -48,8 +48,11 @@ public class VacationService {
         return listVacations;
     }
 
-    public List<Vacations> getVacationsByWorkerId(Long id) {
+    public List<Vacations> getVacationsByWorkerId(Long id, String beginDate, String endDate) {
         Query query = em.createQuery(" select v from Vacations v where worker_id="+id.toString());
+        /*+
+                " AND (beginDate BETWEEN '" + beginDate + "' AND '" + endDate +"'"+
+                " OR  endDate BETWEEN '" + beginDate + "' AND '" + endDate +"')");*/
         List<Vacations> listVacations = query.getResultList();
         return listVacations;
     }

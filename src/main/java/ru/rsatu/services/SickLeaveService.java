@@ -75,6 +75,15 @@ public class SickLeaveService {
         List<SickLeaves> listSickLeaves = query.getResultList();
         return listSickLeaves;
     }
+    public List<SickLeaves> getSickLeavesByWorkerIdDate(Long id, String beginDate, String endDate) {
+        System.out.println("getSickLeavesByWorkerId " + id);
+        Query query = em.createQuery(" select s from SickLeaves s where worker_id="+id.toString());
+        /*+
+                " AND (beginDate BETWEEN '" + beginDate + "' AND '" + endDate +"'"+
+                " OR  endDate BETWEEN '" + beginDate + "' AND '"  + endDate +"')");*/
+        List<SickLeaves> listSickLeaves = query.getResultList();
+        return listSickLeaves;
+    }
 
 
     public List<SickLeaves> getSickLeavesByMedicalOrganizationId(Long id) {

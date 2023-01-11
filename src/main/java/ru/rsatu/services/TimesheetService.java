@@ -84,8 +84,9 @@ public class TimesheetService {
     public List<Timesheets> getAllTimesheets() {
         return em.createQuery(" select c from Timesheets c ", Timesheets.class).getResultList();
     }
-    public List<Timesheets> getTimesheetsByWorkerId(Long id) {
-        Query query = em.createQuery(" select s from Timesheets s where workers_id="+id.toString());
+    public List<Timesheets> getTimesheetsByWorkerId(Long id, String beginDate, String endDate) {
+        Query query = em.createQuery(" from Timesheets where workers_id="+id.toString()+
+                " AND  entryDate BETWEEN '" + beginDate + "' AND '" + endDate +"'");
         List<Timesheets> listTimesheets = query.getResultList();
         return listTimesheets;
     }

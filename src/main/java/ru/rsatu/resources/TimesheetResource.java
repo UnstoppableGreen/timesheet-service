@@ -22,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -69,11 +70,16 @@ public class TimesheetResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/getTimesheetsByWorkerId")
-    public Response getTimesheetsByWorkerId(@QueryParam("page") int page, @QueryParam("workerID") Long id){
-        List<Timesheets> listTimesheets = ts.getTimesheetsByWorkerId(id);
-        List<SickLeaves> listSickLeaves = sls.getSickLeavesByWorkerId(id);
-        List<BusinessTrip> listBusinessTrips = bts.getBusinessTripsByWorkerId(id);
-        List<Vacations> listVacations = vs.getVacationsByWorkerId(id);
+    public Response getTimesheetsByWorkerId(@QueryParam("workerID") Long id,
+                                            @QueryParam("beginDate") String beginDate,
+                                            @QueryParam("endDate") String endDate){
+        LocalDate date1 = LocalDate.parse((String)(beginDate).toString());
+        LocalDate date2 = LocalDate.parse((String)(endDate).toString());
+
+        List<Timesheets> listTimesheets = ts.getTimesheetsByWorkerId(id, beginDate, endDate);
+        List<SickLeaves> listSickLeaves = sls.getSickLeavesByWorkerIdDate(id, beginDate, endDate);
+        List<BusinessTrip> listBusinessTrips = bts.getBusinessTripsByWorkerId(id, beginDate, endDate);
+        List<Vacations> listVacations = vs.getVacationsByWorkerId(id, beginDate, endDate);
 
         List<JSONObject> listJSONObject = new ArrayList<JSONObject>();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -91,32 +97,38 @@ public class TimesheetResource {
             jo.put("duration", d);
             listJSONObject.add(jo);
         }
+
         int daySickLeave = 0;
             for (SickLeaves sickLeave : listSickLeaves) {
                 LocalDate start = LocalDate.parse(formatter.format(sickLeave.getBeginDate()).toString());
                 LocalDate end = LocalDate.parse(formatter.format(sickLeave.getEndDate()).toString());
+
                 for (LocalDate curDate = start; curDate.isBefore(end.plusDays(1)); curDate=curDate.plusDays(1)) {
-                    JSONObject jo = new JSONObject();
-                    jo.put("mark", "Б");
-                    jo.put("date", curDate);
-                    jo.put("duration", 0);
-                    listJSONObject.add(jo);
-                    daySickLeave++;
+                    if (curDate.isAfter(date1.minusDays(1)) && curDate.isBefore(date2.plusDays(1)))
+                    {
+                        JSONObject jo = new JSONObject();
+                        jo.put("mark", "Б");
+                        jo.put("date", curDate);
+                        jo.put("duration", 0);
+                        listJSONObject.add(jo);
+                        daySickLeave++;
+                    }
                 }
 
             }
-
         int dayBusinessTrip = 0;
         for (BusinessTrip businessTrip : listBusinessTrips) {
             LocalDate start = LocalDate.parse(formatter.format(businessTrip.getBeginDate()).toString());
             LocalDate end = LocalDate.parse(formatter.format(businessTrip.getEndDate()).toString());
             for (LocalDate curDate = start; curDate.isBefore(end.plusDays(1)); curDate=curDate.plusDays(1)){
-                JSONObject jo = new JSONObject();
-                jo.put("mark", "K");
-                jo.put("date", curDate);
-                jo.put("duration", 0);
-                listJSONObject.add(jo);
-                dayBusinessTrip++;
+                if (curDate.isAfter(date1.minusDays(1)) && curDate.isBefore(date2.plusDays(1))){
+                    JSONObject jo = new JSONObject();
+                    jo.put("mark", "K");
+                    jo.put("date", curDate);
+                    jo.put("duration", 0);
+                    listJSONObject.add(jo);
+                    dayBusinessTrip++;
+                }
             }
         }
 
@@ -126,12 +138,14 @@ public class TimesheetResource {
             LocalDate start = LocalDate.parse(formatter.format(vacation.getBeginDate()).toString());
             LocalDate end = LocalDate.parse(formatter.format(vacation.getEndDate()).toString());
             for (LocalDate curDate = start; curDate.isBefore(end.plusDays(1)); curDate=curDate.plusDays(1)){
-                JSONObject jo = new JSONObject();
-                jo.put("mark", "ОТ");
-                jo.put("date", curDate);
-                jo.put("duration", 0);
-                listJSONObject.add(jo);
-                dayVacation++;
+                if (curDate.isAfter(date1.minusDays(1)) && curDate.isBefore(date2.plusDays(1))){
+                    JSONObject jo = new JSONObject();
+                    jo.put("mark", "ОТ");
+                    jo.put("date", curDate);
+                    jo.put("duration", 0);
+                    listJSONObject.add(jo);
+                    dayVacation++;
+                }
             }
       }
 
@@ -141,8 +155,8 @@ public class TimesheetResource {
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < listJSONObject.size()-1; i++) {
-                LocalDate date1 = LocalDate.parse((String)(listJSONObject.get(i).get("date")).toString());
-                LocalDate date2 = LocalDate.parse((String)(listJSONObject.get(i+1).get("date")).toString());
+                date1 = LocalDate.parse((String)(listJSONObject.get(i).get("date")).toString());
+                date2 = LocalDate.parse((String)(listJSONObject.get(i+1).get("date")).toString());
                 if ((date2.isBefore(date1))) {
                 	listJSONObject.get(i);
                     temp = listJSONObject.get(i);
@@ -154,7 +168,7 @@ public class TimesheetResource {
         }
         
         JsonObject json = new JsonObject();
-        json.put("page", page);
+        json.put("page", 1);
         //json.put("per_page", 10);
         json.put("per_page", listJSONObject.size());
         int c = listJSONObject.size();
